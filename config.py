@@ -75,7 +75,13 @@ _MAX_SESSIONS           = 50   # LRU eviction threshold
 # ---------------------------------------------------------------------------
 SUPABASE_URL              = os.environ.get("SUPABASE_URL", "").rstrip("/")
 SUPABASE_ANON_KEY         = os.environ.get("SUPABASE_ANON_KEY", "")
+# Legacy HS256 shared secret. Still used by projects on the old symmetric key.
 SUPABASE_JWT_SECRET       = os.environ.get("SUPABASE_JWT_SECRET", "")
+# New Supabase projects sign user access tokens with an ASYMMETRIC key (ES256).
+# The public half can be pinned here (PEM) so the backend verifies tokens without
+# any network call to the JWKS endpoint. `\n` escapes are expanded to newlines so
+# the whole PEM fits on one .env line.
+SUPABASE_JWT_PUBLIC_KEY   = os.environ.get("SUPABASE_JWT_PUBLIC_KEY", "").replace("\\n", "\n").strip()
 # Optional — enables full account deletion (admin API). Keep this SECRET.
 SUPABASE_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 

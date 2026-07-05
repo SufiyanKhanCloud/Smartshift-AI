@@ -53,18 +53,44 @@ async function refreshSession() {
   return data?.session || null;
 }
 
-/* Force a token refresh (called after a backend 401). Returns true on success. */
+/* Force a token refresh (called after a backend 401). Returns true on success.
+ *
+ * Concurrent 401s (e.g. the 15s notification poll racing a user action, or the
+ * SDK's own auto-refresh) must NOT each call refreshSession(): Supabase rotates
+ * refresh tokens, so a second refresh replays an already-consumed token, which
+ * Supabase flags as reuse and revokes the whole session → surprise logout.
+ * We therefore (a) collapse concurrent calls onto a single in-flight promise,
+ * and (b) prefer getSession(), which returns the current valid token and only
+ * refreshes (once, safely) when it has actually expired. */
+let _refreshInFlight = null;
 async function forceRefresh() {
   if (!sb) return false;
-  try {
-    const { data, error } = await sb.auth.refreshSession();
-    if (error || !data?.session) return false;
-    _accessToken = data.session.access_token;
-    _currentUser = data.session.user;
-    return true;
-  } catch (e) {
-    return false;
-  }
+  if (_refreshInFlight) return _refreshInFlight;   // dedupe overlapping refreshes
+
+  _refreshInFlight = (async () => {
+    try {
+      let { data } = await sb.auth.getSession();
+      let session  = data?.session || null;
+
+      const now = Math.floor(Date.now() / 1000);
+      const expired = !session || (session.expires_at && session.expires_at <= now + 10);
+      if (expired) {
+        const { data: rData, error } = await sb.auth.refreshSession();
+        if (error || !rData?.session) return false;
+        session = rData.session;
+      }
+
+      _accessToken = session.access_token;
+      _currentUser = session.user;
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      _refreshInFlight = null;
+    }
+  })();
+
+  return _refreshInFlight;
 }
 
 /* Called when the backend keeps rejecting us — session is truly dead. */

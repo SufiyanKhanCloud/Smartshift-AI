@@ -144,7 +144,20 @@ async function pollNotifications() {
 function startNotificationPolling() {
   if (State.notificationTimer) clearInterval(State.notificationTimer);
   pollNotifications();
-  State.notificationTimer = setInterval(pollNotifications, 15000);
+  State.notificationTimer = setInterval(() => {
+    // Don't poll while the tab is hidden: a backgrounded tab fires stale-token
+    // requests that race the SDK's own token refresh and can trigger a spurious
+    // logout. Resume (and immediately refresh) when the tab becomes visible.
+    if (document.visibilityState === 'hidden') return;
+    pollNotifications();
+  }, 15000);
+
+  if (!State._visibilityPollBound) {
+    State._visibilityPollBound = true;
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') pollNotifications();
+    });
+  }
 }
 
 function initAlertFilterTabs() {
