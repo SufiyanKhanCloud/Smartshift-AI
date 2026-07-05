@@ -1,5 +1,5 @@
 /* ==========================================================================
-   11-forecast.js — Demand forecasting page
+   11-forecast.js - Demand forecasting page
    ========================================================================== */
 let _forecastChart = null;
 
@@ -31,7 +31,7 @@ async function handleForecast() {
     res = await apiPost('/predict', body);
   } catch (err) {
     setForecastLoading(false);
-    showToast('Forecast request failed — network error.', 'error');
+    showToast('Forecast request failed - network error.', 'error');
     return;
   }
 
@@ -60,10 +60,10 @@ async function handleForecast() {
   if (cta) cta.style.display = 'block';
 
   pushAlert(
-    `Forecast complete — ${data.predictions.length}-day window, peak ${data.peak_day.predicted} customers on ${data.peak_day.date}.`,
+    `Forecast complete - ${data.predictions.length}-day window, peak ${data.peak_day.predicted} customers on ${data.peak_day.date}.`,
     'success'
   );
-  showToast(`Forecast ready — peak day: ${data.peak_day.day_name} (${data.peak_day.predicted} customers).`, 'success');
+  showToast(`Forecast ready - peak day: ${data.peak_day.day_name} (${data.peak_day.predicted} customers).`, 'success');
 }
 
 function setForecastLoading(loading) {

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   05-boot.js — Boot screen animation
+   05-boot.js - Boot screen animation
    ========================================================================== */
 const BOOT_MESSAGES = [
   'Initializing AI systems…',

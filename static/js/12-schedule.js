@@ -1,5 +1,5 @@
 /* ==========================================================================
-   12-schedule.js — Shift scheduling page
+   12-schedule.js - Shift scheduling page
    ========================================================================== */
 
 function initSchedule() {
@@ -47,7 +47,7 @@ async function handleCalculate() {
     res = await apiPost('/calculate', body);
   } catch (err) {
     setScheduleLoading(false);
-    showToast('Schedule request failed — network error.', 'error');
+    showToast('Schedule request failed - network error.', 'error');
     return;
   }
 
@@ -77,10 +77,10 @@ async function handleCalculate() {
   if (cta) cta.style.display = 'block';
 
   pushAlert(
-    `Schedule ready — ${data.workers_needed} workers, $${data.total_labor_cost.toLocaleString()} labor cost.`,
+    `Schedule ready - ${data.workers_needed} workers, $${data.total_labor_cost.toLocaleString()} labor cost.`,
     'success'
   );
-  showToast(`${data.workers_needed} shifts generated — est. $${data.total_labor_cost.toLocaleString()}.`, 'success');
+  showToast(`${data.workers_needed} shifts generated - est. $${data.total_labor_cost.toLocaleString()}.`, 'success');
 
   if (State.lastForecastData) buildWeeklyScheduleTable(data);
 }
@@ -161,7 +161,7 @@ function renderInsightBar(data) {
   const subMap  = {
     success: `Shift length of ${data.avg_shift_hours}h optimises worker productivity.`,
     info:    `Shift length of ${data.avg_shift_hours}h provides balanced coverage.`,
-    danger:  `Short shifts (${data.avg_shift_hours}h) increase rotation overhead — consider longer shifts.`,
+    danger:  `Short shifts (${data.avg_shift_hours}h) increase rotation overhead - consider longer shifts.`,
   };
 
   setEl('sched-insight-icon',  iconMap[badge.level] || '📋');

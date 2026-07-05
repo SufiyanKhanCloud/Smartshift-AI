@@ -1,5 +1,5 @@
 /* ==========================================================================
-   04-export.js — CSV download utilities
+   04-export.js - CSV download utilities
    ========================================================================== */
 function downloadCSV(filename, headers, rows) {
   const escape = v => {

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   08-alerts.js — Notifications, toasts, alert inbox, reset/clear buttons
+   08-alerts.js - Notifications, toasts, alert inbox, reset/clear buttons
    ========================================================================== */
 
 function updateAlertBadge() {
@@ -52,7 +52,7 @@ function renderAlertList(hasNew = false) {
       <div class="empty-state">
         <div class="empty-icon">🔔</div>
         <h3>${filter === 'all' ? 'No Alerts Yet' : 'No ' + filter + ' alerts'}</h3>
-        <p>Notifications appear here as the pipeline runs — training completions, demand spikes, workforce adjustments.</p>
+        <p>Notifications appear here as the pipeline runs - training completions, demand spikes, workforce adjustments.</p>
       </div>`;
     return;
   }

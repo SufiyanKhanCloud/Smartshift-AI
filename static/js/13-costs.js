@@ -1,5 +1,5 @@
 /* ==========================================================================
-   13-costs.js — Cost analysis and worker adjustment page
+   13-costs.js - Cost analysis and worker adjustment page
    ========================================================================== */
 let _costChart = null;
 
@@ -88,7 +88,7 @@ function initCosts() {
       unlockBtn.textContent = 'Unlocked';
       unlockBtn.disabled    = true;
       const msg = document.querySelector('#cost-sync-banner .sync-banner-msg');
-      if (msg) msg.textContent = 'Fields unlocked — you can now edit Wage, Shift Hours and Historical Averages manually.';
+      if (msg) msg.textContent = 'Fields unlocked - you can now edit Wage, Shift Hours and Historical Averages manually.';
     });
   }
 }
@@ -146,9 +146,6 @@ async function handleOptimizeCost() {
 
   renderCostKPIs(data);
   renderCostChart(data);
-
-  const exportBtn = document.getElementById('export-cost-btn');
-  if (exportBtn) exportBtn.style.display = 'inline-flex';
 
   pushAlert(
     `Cost analysis: $${data.predicted_cost.toLocaleString()} predicted vs $${data.actual_cost.toLocaleString()} historical. ` +

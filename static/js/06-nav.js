@@ -1,5 +1,5 @@
 /* ==========================================================================
-   06-nav.js — SPA navigation
+   06-nav.js - SPA navigation
    ========================================================================== */
 function initNav() {
   document.querySelectorAll('.nav-item').forEach((item) => {

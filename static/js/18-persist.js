@@ -1,5 +1,5 @@
 /* ==========================================================================
-   18-persist.js — persist pipeline results to the Supabase database
+   18-persist.js - persist pipeline results to the Supabase database
    --------------------------------------------------------------------------
    After each pipeline step succeeds, the result is inserted into the matching
    per-user table (uploads / models / forecasts / schedules / cost_analyses).
@@ -114,7 +114,7 @@ async function restoreLastDataset() {
     if (typeof refreshDashboard === 'function') refreshDashboard();
     if (typeof loadDashboardTrendChart === 'function') loadDashboardTrendChart();
     if (typeof showToast === 'function') {
-      showToast('Restored your last dataset — retrain the model to continue the pipeline.', 'info');
+      showToast('Restored your last dataset - retrain the model to continue the pipeline.', 'info');
     }
   } catch (_) { /* best effort */ }
 }

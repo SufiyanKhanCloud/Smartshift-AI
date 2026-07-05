@@ -1,5 +1,5 @@
 /* ==========================================================================
-   02-api.js — CSRF helpers and fetch wrappers
+   02-api.js - CSRF helpers and fetch wrappers
    ========================================================================== */
 async function fetchCsrfToken() {
   try {

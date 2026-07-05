@@ -1,9 +1,9 @@
 /* ==========================================================================
-   03-utils.js — Generic DOM / functional utilities
+   03-utils.js - Generic DOM / functional utilities
    ========================================================================== */
 function setEl(id, value) {
   const el = document.getElementById(id);
-  if (el) el.textContent = value ?? '—';
+  if (el) el.textContent = value ?? '-';
 }
 
 function debounce(fn, delay) {

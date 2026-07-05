@@ -1,5 +1,5 @@
 /* ==========================================================================
-   15-settings.js — settings persistence in the Supabase database
+   15-settings.js - settings persistence in the Supabase database
    (per-user `user_settings` table, replaces the old localStorage version)
    ========================================================================== */
 
@@ -39,7 +39,7 @@ async function loadSettings() {
 }
 
 async function saveSettings() {
-  if (!sb) { showToast('Not connected — please log in again.', 'error'); return; }
+  if (!sb) { showToast('Not connected - please log in again.', 'error'); return; }
   const user = getCurrentUser();
   if (!user) { showToast('You must be logged in to save settings.', 'error'); return; }
 
@@ -65,7 +65,7 @@ async function saveSettings() {
     const { error } = await sb.from('user_settings').upsert(row, { onConflict: 'user_id' });
     if (error) { showToast(`Could not save settings: ${error.message}`, 'error'); return; }
   } catch (e) {
-    showToast('Could not save settings — network error.', 'error');
+    showToast('Could not save settings - network error.', 'error');
     return;
   }
 
@@ -77,7 +77,7 @@ async function saveSettings() {
     textEl.innerHTML = `Wage: <strong>${settings.currency}${settings.wage}/hr</strong> &nbsp;|&nbsp; Shift: <strong>${settings.hours}h</strong> &nbsp;|&nbsp; Ratio: <strong>1 worker / ${settings.ratio} customers</strong>${settings.businessName ? ` &nbsp;|&nbsp; Business: <strong>${settings.businessName}</strong>` : ''}`;
     display.style.display = 'block';
   }
-  showToast('Settings saved to your account — applied to schedule and cost pages.', 'success');
+  showToast('Settings saved to your account - applied to schedule and cost pages.', 'success');
 }
 
 function applySettingsToForm(s) {

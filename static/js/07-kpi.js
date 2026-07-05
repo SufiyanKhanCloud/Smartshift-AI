@@ -1,5 +1,5 @@
 /* ==========================================================================
-   07-kpi.js — KPI cards, dashboard refresh, pipeline step indicators
+   07-kpi.js - KPI cards, dashboard refresh, pipeline step indicators
    ========================================================================== */
 const _wsMap = {
   'kv-rows':     'ws-rows',
@@ -11,7 +11,7 @@ const _wsMap = {
 function updateKPI(id, value) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.textContent = value ?? '—';
+  el.textContent = value ?? '-';
   const card = el.closest('.kpi-card');
   if (card) {
     card.classList.remove('animate');
@@ -19,7 +19,7 @@ function updateKPI(id, value) {
     card.classList.add('animate');
   }
   const wsEl = document.getElementById(_wsMap[id]);
-  if (wsEl) wsEl.textContent = value ?? '—';
+  if (wsEl) wsEl.textContent = value ?? '-';
 }
 
 function refreshDashboard() {

@@ -27,8 +27,10 @@ def optimize_cost():
     hourly_wage       = float(body.get("hourly_wage") or schedule.get("hourly_wage") or 15.0)
     shift_hours       = float(body.get("shift_hours") or schedule.get("shift_hours") or 8.0)
 
-    predicted_workers = max(1, min(predicted_workers, 10_000))
-    actual_workers    = max(1, min(actual_workers, 10_000))
+    # Worker counts are whole people — round to integers so the labour-cost
+    # maths uses e.g. 7 workers, not 6.8999999999999995.
+    predicted_workers = int(round(max(1, min(predicted_workers, 10_000))))
+    actual_workers    = int(round(max(1, min(actual_workers, 10_000))))
     hourly_wage       = max(1, min(hourly_wage, 500.0))
     shift_hours       = max(1, min(shift_hours, 24.0))
 

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   10-train.js — Model training page
+   10-train.js - Model training page
    ========================================================================== */
 let _trainChart = null;
 
@@ -16,7 +16,7 @@ function enableTrainButton() {
   const btn  = document.getElementById('train-btn');
   const hint = document.getElementById('train-prereq-hint');
   if (btn)  btn.disabled = false;
-  if (hint) hint.textContent = 'Data loaded — ready to train.';
+  if (hint) hint.textContent = 'Data loaded - ready to train.';
 }
 
 async function handleTrain() {
@@ -32,7 +32,7 @@ async function handleTrain() {
   } catch (err) {
     setTrainLoading(false);
     setModelStatus('error', 'Network error during training.');
-    showToast('Training failed — network error.', 'error');
+    showToast('Training failed - network error.', 'error');
     return;
   }
 
@@ -53,11 +53,11 @@ async function handleTrain() {
   renderTrainChart(data.chart_series);
   renderEvalTable(data.comparison_table);
 
-  const cached = data.cached ? ' (cached — data unchanged)' : '';
+  const cached = data.cached ? ' (cached - data unchanged)' : '';
   setModelStatus('ready', `${data.model_type} · ${data.accuracy}% accuracy${cached}`);
 
-  pushAlert(`Model trained — ${data.model_type}, ${data.accuracy}% accuracy on test set.`, 'success');
-  showToast(`Model trained — ${data.model_type}, ${data.accuracy}% accuracy.`, 'success');
+  pushAlert(`Model trained - ${data.model_type}, ${data.accuracy}% accuracy on test set.`, 'success');
+  showToast(`Model trained - ${data.model_type}, ${data.accuracy}% accuracy.`, 'success');
 
   const cta = document.getElementById('train-cta');
   if (cta) cta.style.display = 'block';

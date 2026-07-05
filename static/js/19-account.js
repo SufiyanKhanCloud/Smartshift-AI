@@ -1,5 +1,5 @@
 /* ==========================================================================
-   19-account.js — account management on the Settings page
+   19-account.js - account management on the Settings page
    (display name, change email, change password, delete account)
    ========================================================================== */
 
@@ -8,7 +8,7 @@ function populateAccount() {
   const user = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
   if (!user) return;
   const emailEl = document.getElementById('acct-current-email');
-  if (emailEl) emailEl.textContent = user.email || '—';
+  if (emailEl) emailEl.textContent = user.email || '-';
   const nameEl = document.getElementById('acct-name');
   if (nameEl && !nameEl.value) nameEl.value = user.user_metadata?.full_name || '';
 }
@@ -34,7 +34,7 @@ function wireAccountUI() {
     const { error } = await sb.auth.updateUser({ email });
     emailBtn.disabled = false;
     if (error) return showToast(error.message, 'error');
-    showToast('Confirmation sent — check BOTH your old and new inbox to confirm the change.', 'success');
+    showToast('Confirmation sent - check BOTH your old and new inbox to confirm the change.', 'success');
   });
 
   // ---- Change password ----
@@ -72,7 +72,7 @@ function wireAccountUI() {
       setTimeout(() => signOutUser(), 1000);
     } catch (e) {
       delBtn.disabled = false;
-      showToast('Could not delete account — try again.', 'error');
+      showToast('Could not delete account - try again.', 'error');
     }
   });
 }

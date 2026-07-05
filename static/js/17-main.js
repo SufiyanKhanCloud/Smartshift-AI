@@ -1,5 +1,5 @@
 /* ==========================================================================
-   17-main.js — Bootstrap, cross-module wiring, pipeline enable chain
+   17-main.js - Bootstrap, cross-module wiring, pipeline enable chain
    ========================================================================== */
 
 /* ---- Extend refreshDashboard to keep report checklist in sync ---- */
@@ -113,7 +113,7 @@ async function bootstrap() {
   if (session) {
     await startApp();
   } else if (hasAuthCallback) {
-    // OAuth round-trip still resolving — show a spinner, not the login form.
+    // OAuth round-trip still resolving - show a spinner, not the login form.
     // onAuthStateChange(SIGNED_IN) will start the app; fall back to login if it stalls.
     showAuthScreen('loading');
     setTimeout(() => { if (!window.__ssAppStarted) showAuthScreen('login'); }, 5000);

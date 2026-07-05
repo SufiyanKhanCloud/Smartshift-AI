@@ -1,5 +1,5 @@
 /* ==========================================================================
-   14-history.js — Historical analytics, heatmap, trend charts
+   14-history.js - Historical analytics, heatmap, trend charts
    ========================================================================== */
 let _trendChart = null;
 let _dowChart   = null;
@@ -27,7 +27,7 @@ async function handleLoadHistory() {
     ]);
   } catch (err) {
     setLoading(btn, false, '📈 Load History');
-    showToast('History request failed — network error.', 'error');
+    showToast('History request failed - network error.', 'error');
     return;
   }
 
@@ -206,7 +206,7 @@ function renderHeatmap(heatmap, hasTimeSlot) {
       cell.className        = 'heatmap-cell';
       cell.style.background = `rgba(0,212,170,${alpha.toFixed(3)})`;
       cell.style.color      = textColor;
-      cell.textContent      = val > 0 ? Math.round(val) : '—';
+      cell.textContent      = val > 0 ? Math.round(val) : '-';
       cell.dataset.tip      = `${days[dow]}, ${slot}: ${val > 0 ? Math.round(val) + ' customers' : 'No data'}`;
       grid.appendChild(cell);
     }

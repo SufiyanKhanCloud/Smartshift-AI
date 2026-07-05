@@ -1,5 +1,5 @@
 /* ==========================================================================
-   09-upload.js — CSV upload, drag-and-drop, data preview
+   09-upload.js - CSV upload, drag-and-drop, data preview
    ========================================================================== */
 
 function initUpload() {
@@ -48,7 +48,7 @@ async function handleUpload(file) {
     res = await apiPostForm('/upload', form);
   } catch (err) {
     setDropzoneLoading(false);
-    showUploadError('Network error — could not reach the server.');
+    showUploadError('Network error - could not reach the server.');
     return;
   }
 
@@ -72,7 +72,7 @@ async function handleUpload(file) {
   refreshDashboard();
   renderUploadStats(data);
   onUploadSuccess();
-  showToast(`CSV loaded — ${data.row_count} rows ready for training.`, 'success');
+  showToast(`CSV loaded - ${data.row_count} rows ready for training.`, 'success');
 }
 
 let _dashTrendChart = null;

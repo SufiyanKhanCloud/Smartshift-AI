@@ -366,6 +366,11 @@
       flex-shrink: 0;
     }
 
+    .nav-icon svg {
+      width: 19px;
+      height: 19px;
+    }
+
     .nav-label { flex: 1; }
 
     /* Alert badge */

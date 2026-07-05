@@ -1,5 +1,5 @@
 /* ==========================================================================
-   00-supabase.js — Supabase client, authentication, and the login/signup gate
+   00-supabase.js - Supabase client, authentication, and the login/signup gate
    ==========================================================================
    Auth runs entirely on the client via the Supabase JS library. The resulting
    access token (JWT) is cached here and attached to every backend API call
@@ -14,7 +14,7 @@ let _currentUser = null;       // cached user object
 function initSupabase() {
   const cfg = window.SS_CONFIG || {};
   if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) {
-    console.error('Supabase config missing — check /app-config.js and your .env');
+    console.error('Supabase config missing - check /app-config.js and your .env');
     return null;
   }
   if (!window.supabase || !window.supabase.createClient) {
@@ -93,12 +93,12 @@ async function forceRefresh() {
   return _refreshInFlight;
 }
 
-/* Called when the backend keeps rejecting us — session is truly dead. */
+/* Called when the backend keeps rejecting us - session is truly dead. */
 let _authExpiredShown = false;
 function onAuthExpired() {
   if (_authExpiredShown) return;
   _authExpiredShown = true;
-  try { if (typeof showToast === 'function') showToast('Your session expired — please log in again.', 'warning'); } catch (_) {}
+  try { if (typeof showToast === 'function') showToast('Your session expired - please log in again.', 'warning'); } catch (_) {}
   setTimeout(() => { signOutUser(); }, 1200);   // SIGNED_OUT → reload to login screen
 }
 
@@ -229,7 +229,7 @@ function wireAuthUI() {
       // email confirmation disabled → logged in immediately
       _authMsg('signup-error', 'Account created!', 'success');
     } else {
-      _authMsg('signup-error', 'Account created — check your email to confirm, then log in.', 'success');
+      _authMsg('signup-error', 'Account created - check your email to confirm, then log in.', 'success');
     }
   });
 
@@ -291,9 +291,9 @@ function wireAuthUI() {
     try {
       const { error } = await sb.auth.resend({ type: 'signup', email });
       if (error) return _authMsg('login-error', error.message);
-      _authMsg('login-error', 'Confirmation email resent — check your inbox.', 'success');
+      _authMsg('login-error', 'Confirmation email resent - check your inbox.', 'success');
     } catch (_) {
-      _authMsg('login-error', 'Could not resend — try again shortly.');
+      _authMsg('login-error', 'Could not resend - try again shortly.');
     }
   });
 
