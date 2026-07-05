@@ -78,10 +78,23 @@ SUPABASE_ANON_KEY         = os.environ.get("SUPABASE_ANON_KEY", "")
 # Legacy HS256 shared secret. Still used by projects on the old symmetric key.
 SUPABASE_JWT_SECRET       = os.environ.get("SUPABASE_JWT_SECRET", "")
 # New Supabase projects sign user access tokens with an ASYMMETRIC key (ES256).
-# The public half can be pinned here (PEM) so the backend verifies tokens without
-# any network call to the JWKS endpoint. `\n` escapes are expanded to newlines so
-# the whole PEM fits on one .env line.
-SUPABASE_JWT_PUBLIC_KEY   = os.environ.get("SUPABASE_JWT_PUBLIC_KEY", "").replace("\\n", "\n").strip()
+# The backend needs the PUBLIC half to verify them. This is PUBLIC information —
+# Supabase serves it openly at /auth/v1/.well-known/jwks.json — so it is safe to
+# commit. Pinning it here means every developer verifies tokens offline (no .env
+# entry, no network round-trip to the JWKS endpoint). If the project ever rotates
+# its signing key, set SUPABASE_JWT_PUBLIC_KEY in .env to override this default,
+# or update the PEM below. `\n` escapes in the env value are expanded to newlines
+# so the whole PEM can live on one .env line.
+_DEFAULT_JWT_PUBLIC_KEY = (
+    "-----BEGIN PUBLIC KEY-----\n"
+    "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEGUysMY/2RYOuT+q/ahhmM8TagyGd\n"
+    "QVTKDsoXDwYE0k8B1UXU7jKaAVgHgGL41Q986bqsgYfIaPS9KeuR5IG1lw==\n"
+    "-----END PUBLIC KEY-----"
+)
+SUPABASE_JWT_PUBLIC_KEY   = (
+    os.environ.get("SUPABASE_JWT_PUBLIC_KEY", "").replace("\\n", "\n").strip()
+    or _DEFAULT_JWT_PUBLIC_KEY
+)
 # Optional — enables full account deletion (admin API). Keep this SECRET.
 SUPABASE_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
