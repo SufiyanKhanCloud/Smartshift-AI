@@ -45,6 +45,9 @@ function initActionButtons() {
   const reportBtn = document.getElementById('generate-report-btn');
   if (reportBtn) reportBtn.addEventListener('click', generateReport);
 
+  const printReportBtn = document.getElementById('print-report-btn');
+  if (printReportBtn) printReportBtn.addEventListener('click', printReport);
+
   const saveBtn = document.getElementById('save-settings-btn');
   if (saveBtn) saveBtn.addEventListener('click', saveSettings);
 
