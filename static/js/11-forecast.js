@@ -53,9 +53,6 @@ async function handleForecast() {
   renderForecastChart(data.lookback_14, data.predictions);
   renderSlotTable(data.time_slots, data.peak_day.predicted, data.has_time_slot);
 
-  const exportBtn = document.getElementById('export-forecast-btn');
-  if (exportBtn) exportBtn.style.display = 'inline-flex';
-
   const cta = document.getElementById('forecast-cta');
   if (cta) cta.style.display = 'block';
 

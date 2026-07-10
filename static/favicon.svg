@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#183b44"/>
+      <stop offset="0.55" stop-color="#0f2a33"/>
+      <stop offset="1" stop-color="#0a1820"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.42" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#2a5d68" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#2a5d68" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bolt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7ff0e0"/>
+      <stop offset="0.5" stop-color="#3fd9c6"/>
+      <stop offset="1" stop-color="#17b7a6"/>
+    </linearGradient>
+    <filter id="boltGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="round"><rect x="16" y="16" width="480" height="480" rx="116"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#round)">
+    <rect x="16" y="16" width="480" height="480" rx="116" fill="url(#bg)"/>
+    <rect x="16" y="16" width="480" height="480" fill="url(#glow)"/>
+    <!-- faint grid -->
+    <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1.5">
+      <line x1="176" y1="16" x2="176" y2="496"/>
+      <line x1="336" y1="16" x2="336" y2="496"/>
+      <line x1="16" y1="176" x2="496" y2="176"/>
+      <line x1="16" y1="336" x2="496" y2="336"/>
+    </g>
+  </g>
+  <rect x="16.5" y="16.5" width="479" height="479" rx="115.5" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+
+  <!-- lightning bolt -->
+  <g filter="url(#boltGlow)">
+    <path d="M286 92 L150 288 L234 288 L214 420 L358 232 L272 232 Z" fill="url(#bolt)"/>
+    <path d="M286 92 L272 232 L358 232 L214 420 Z" fill="#b8fbef" fill-opacity="0.35"/>
+  </g>
+</svg>

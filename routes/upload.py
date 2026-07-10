@@ -40,7 +40,8 @@ def upload():
 
     df.columns = [c.strip() for c in df.columns]
 
-    missing = REQUIRED_COLS - set(df.columns)
+    required = REQUIRED_COLS | {"Time Slot"}
+    missing = required - set(df.columns)
     if missing:
         return jsonify({"error": f"Missing required columns: {', '.join(sorted(missing))}"}), 422
 
@@ -54,7 +55,7 @@ def upload():
     try:
         df["Date"] = pd.to_datetime(df["Date"])
     except Exception:
-        return jsonify({"error": "Could not parse Date column. Use YYYY-MM-DD."}), 422
+        return jsonify({"error": "Could not parse Date column. Use MM/DD/YYYY."}), 422
 
     df["Day"] = df["Day"].apply(parse_day)
     df = df.dropna(subset=["Day"])
@@ -70,6 +71,11 @@ def upload():
 
     if has_time_slot:
         df["Time Slot"] = df["Time Slot"].astype(str).str.strip()
+        # Drop rows whose Time Slot is missing/blank so a stray empty cell can't
+        # corrupt the intraday heatmap and slot-anchored scheduling.
+        df = df[~df["Time Slot"].str.lower().isin(["", "nan", "none", "nat"])]
+        if df.empty:
+            return jsonify({"error": "No valid rows remain after removing rows with a missing Time Slot."}), 422
         slot_agg = (
             df.groupby("Time Slot")
               .agg(

@@ -38,6 +38,21 @@
   };
 }());
 
+/* ---- Wire buttons that used to rely on inline onclick handlers ----
+   The Content-Security-Policy blocks inline event handlers (script-src has no
+   'unsafe-inline'), so these must be bound with addEventListener instead. ---- */
+function initActionButtons() {
+  const reportBtn = document.getElementById('generate-report-btn');
+  if (reportBtn) reportBtn.addEventListener('click', generateReport);
+
+  const saveBtn = document.getElementById('save-settings-btn');
+  if (saveBtn) saveBtn.addEventListener('click', saveSettings);
+
+  document.querySelectorAll('[data-nav]').forEach((btn) => {
+    btn.addEventListener('click', () => navigateTo(btn.dataset.nav));
+  });
+}
+
 /* ---- Cross-module callback: runs after every successful upload ---- */
 function onUploadSuccess() {
   enableTrainButton();
@@ -67,6 +82,7 @@ async function startApp() {
   await fetchCsrfToken();
 
   initNav();
+  initActionButtons();
   initResetButton();
   initClearAlertsButton();
   initAlertFilterTabs();

@@ -191,12 +191,19 @@ function generateReport() {
   </section>
 </div></body></html>`;
 
-  const win = window.open('', '_blank');
+  // Open the report via a Blob URL rather than an about:blank popup. An
+  // about:blank window inherits the opener's Content-Security-Policy, which has
+  // no 'unsafe-inline' — that blocked the in-report "Print / Save as PDF"
+  // button's inline handler. A blob: tab carries its own (empty) policy, so the
+  // Print button works.
+  const blob = new Blob([html], { type: 'text/html' });
+  const url  = URL.createObjectURL(blob);
+  const win  = window.open(url, '_blank');
   if (win) {
-    win.document.write(html);
-    win.document.close();
     showToast('Report opened in a new tab - use Print to save as PDF.', 'success');
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
   } else {
+    URL.revokeObjectURL(url);
     showToast('Popup blocked - please allow popups for this page.', 'error');
   }
 }

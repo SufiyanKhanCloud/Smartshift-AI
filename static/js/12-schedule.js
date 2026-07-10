@@ -68,9 +68,6 @@ async function handleCalculate() {
   renderInsightBar(data);
   renderShiftCards(data.shifts);
 
-  const exportBtn = document.getElementById('export-schedule-btn');
-  if (exportBtn) exportBtn.style.display = 'inline-flex';
-
   syncCostAnalysisFromSchedule(data);
 
   const cta = document.getElementById('schedule-cta');

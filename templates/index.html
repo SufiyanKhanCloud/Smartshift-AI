@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SmartShiftAI - ML Workforce Planning</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="apple-touch-icon" href="/static/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -233,10 +235,10 @@
                 <div class="welcome-title">Welcome to <span>SmartShiftAI</span></div>
                 <div class="welcome-sub" style="max-width:560px;">Upload your historical CSV data to kick off the ML pipeline. The system will train a demand forecasting model, generate optimized shift schedules, and estimate your labor costs - entirely in this session.</div>
                 <div class="welcome-quick-actions">
-                  <button class="quick-action-btn" onclick="navigateTo('upload')">📁 Upload Data</button>
-                  <button class="quick-action-btn" onclick="navigateTo('train')">🧠 Train Model</button>
-                  <button class="quick-action-btn" onclick="navigateTo('forecast')">🔮 Forecast</button>
-                  <button class="quick-action-btn" onclick="navigateTo('schedule')">🗓️ Schedule</button>
+                  <button class="quick-action-btn" data-nav="upload">📁 Upload Data</button>
+                  <button class="quick-action-btn" data-nav="train">🧠 Train Model</button>
+                  <button class="quick-action-btn" data-nav="forecast">🔮 Forecast</button>
+                  <button class="quick-action-btn" data-nav="schedule">🗓️ Schedule</button>
                 </div>
               </div>
               <div style="text-align:right;flex-shrink:0;">
@@ -365,7 +367,7 @@
               <div class="col-item required">
                 <span class="col-badge required-badge">Required</span>
                 <span class="col-name">Date</span>
-                <span class="col-desc">YYYY-MM-DD format</span>
+                <span class="col-desc">MM/DD/YYYY format</span>
               </div>
               <div class="col-item required">
                 <span class="col-badge required-badge">Required</span>
@@ -387,10 +389,10 @@
                 <span class="col-name">Workers</span>
                 <span class="col-desc">Staff on shift that day</span>
               </div>
-              <div class="col-item optional">
-                <span class="col-badge optional-badge">Optional</span>
+              <div class="col-item required">
+                <span class="col-badge required-badge">Required</span>
                 <span class="col-name">Time Slot</span>
-                <span class="col-desc">e.g. "10:00 AM - 12:00 PM" - unlocks intraday heatmap &amp; slot-anchored scheduling</span>
+                <span class="col-desc">e.g. "10:00 AM - 12:00 PM" - unlocks intraday heatmap &amp; slot-anchored scheduling. Rows with a missing time slot are skipped.</span>
               </div>
             </div>
           </div>
@@ -620,9 +622,6 @@
               <div class="page-subtitle">ML-generated customer demand predictions with time-slot breakdown.</div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-ghost" id="export-forecast-btn" onclick="exportForecastCSV()" style="display:none" title="Download forecast as CSV">
-                <span class="btn-text">⬇ Export CSV</span>
-              </button>
               <button class="btn btn-primary" id="forecast-btn" disabled>
                 <span class="btn-spinner"></span>
                 <span class="btn-text">🔮 Run Forecast</span>
@@ -743,9 +742,6 @@
               <div class="page-subtitle">Generated worker shift cards anchored to your operational window.</div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-ghost" id="export-schedule-btn" onclick="exportScheduleCSV()" style="display:none" title="Download schedule as CSV">
-                <span class="btn-text">⬇ Export CSV</span>
-              </button>
               <button class="btn btn-primary" id="schedule-btn" disabled>
                 <span class="btn-spinner"></span>
                 <span class="btn-text">🗓️ Generate Schedule</span>
@@ -829,9 +825,8 @@
 
           <!-- Multi-day schedule table (hidden until generated) -->
           <div class="card" id="weekly-schedule-wrap" style="display:none;margin-top:20px">
-            <div class="card-title" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <div class="card-title">
               <span>📅 Full Forecast-Period Schedule</span>
-              <button class="btn btn-ghost" id="export-weekly-btn" onclick="exportWeeklyScheduleCSV()" style="font-size:0.8rem;padding:5px 12px">⬇ Export CSV</button>
             </div>
             <div class="table-scroll">
               <table class="data-table">
@@ -1185,7 +1180,7 @@
               <div class="page-subtitle">Generate a complete printable analysis report from your pipeline results.</div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-primary" onclick="generateReport()" id="generate-report-btn">
+              <button class="btn btn-primary" id="generate-report-btn">
                 <span class="btn-text">📄 Generate Report</span>
               </button>
             </div>
@@ -1268,7 +1263,7 @@
               <div class="page-subtitle">Default parameters saved to your account - applied automatically on every device.</div>
             </div>
             <div class="page-actions">
-              <button class="btn btn-primary" onclick="saveSettings()">
+              <button class="btn btn-primary" id="save-settings-btn">
                 <span class="btn-text">💾 Save Settings</span>
               </button>
             </div>

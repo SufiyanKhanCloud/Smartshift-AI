@@ -30,12 +30,12 @@ class TestCsrfTokenRoute:
 
 class TestUploadRoute:
     def _make_csv(self):
-        lines = ['Date,Day,Customers,Sales,Workers']
+        lines = ['Date,Day,Customers,Sales,Workers,Time Slot']
         for i in range(30):
             from datetime import date, timedelta
             d = date(2024, 1, 1) + timedelta(days=i)
             dow = d.strftime('%A')
-            lines.append(f'{d},{dow},{50+i},{500+i*10},{2+i%3}')
+            lines.append(f'{d},{dow},{50+i},{500+i*10},{2+i%3},10:00 AM-12:00 PM')
         return '\n'.join(lines).encode()
 
     def test_upload_requires_auth(self, client):
