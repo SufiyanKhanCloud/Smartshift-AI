@@ -2216,3 +2216,87 @@
     }
     .sidebar-logout:hover { text-decoration: underline; }
     .rci-sub   { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ================================================================== */
+    /* RESPONSIVE — sidebar drawer, backdrop, stat-grid stacking           */
+    /* ================================================================== */
+
+    /* Hamburger toggle — hidden on desktop, shown in the mobile breakpoint
+       below. Kept in normal flow at all widths (not display:none) so it
+       never has to be re-inserted into layout by the media query. */
+    .sidebar-toggle-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .sidebar-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .sidebar-toggle-btn svg { width: 20px; height: 20px; }
+
+    /* Backdrop for the slide-out drawer. Always position:fixed + hidden so
+       it never occupies a flex slot in #body-row on any screen size — the
+       mobile media query below only needs to toggle visibility, not layout. */
+    #sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 190;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    @media (max-width: 768px) {
+      /* ---- Topbar: make room for the hamburger, drop non-essential text */
+      #topbar { padding: 0 14px; gap: 10px; }
+      .sidebar-toggle-btn { display: flex; }
+      .topbar-divider,
+      .topbar-subtitle { display: none; }
+      .session-pill { padding: 5px 9px; }
+      #session-label { display: none; }
+      .topbar-reset-label { display: none; }
+      .topbar-reset { padding: 7px 9px; }
+
+      /* ---- Sidebar becomes a slide-out drawer over the content ---- */
+      #sidebar {
+        position: fixed;
+        top: var(--topbar-h);
+        bottom: 0;
+        left: 0;
+        z-index: 200;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: var(--shadow);
+      }
+      #sidebar.open { transform: translateX(0); }
+
+      #sidebar-backdrop.open {
+        display: block;
+        opacity: 1;
+      }
+
+      /* #main no longer shares width with a docked sidebar */
+      #main { width: 100%; }
+
+      /* ---- Stat card grids: force single column ---- */
+      .kpi-row,
+      .stats-grid,
+      .shift-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .welcome-stats {
+        flex-direction: column;
+        gap: 14px;
+      }
+    }
+
+    /* Smoother momentum scrolling for wide tables on touch devices */
+    .table-scroll { -webkit-overflow-scrolling: touch; }

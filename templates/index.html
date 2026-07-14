@@ -132,6 +132,9 @@
 
   <!-- TOP BAR -->
   <header id="topbar">
+    <button id="sidebar-toggle" class="sidebar-toggle-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+    </button>
     <div class="topbar-logo">SmartShift<span>AI</span></div>
     <div class="topbar-divider"></div>
     <div class="topbar-subtitle">ML Workforce Planning</div>
@@ -141,12 +144,13 @@
       <span id="session-label">Session Active</span>
     </div>
     <button class="topbar-reset" id="reset-btn" title="Reset session">
-      <span>↺</span> Reset
+      <span>↺</span> <span class="topbar-reset-label">Reset</span>
     </button>
   </header>
 
   <!-- BODY ROW -->
   <div id="body-row">
+    <div id="sidebar-backdrop"></div>
 
     <!-- SIDEBAR -->
     <nav id="sidebar" aria-label="Main navigation">
