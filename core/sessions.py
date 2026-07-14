@@ -107,18 +107,26 @@ _rate_store: dict = defaultdict(list)
 
 
 def rate_limit(max_calls: int, window: int = 60):
-    """Decorator: allow max_calls per window-seconds per session UID."""
+    """Decorator: allow max_calls per window-seconds per (session UID, route).
+
+    Keyed per-route (not just per-uid) so each endpoint's budget is
+    independent — e.g. five /train calls don't eat into /upload's or
+    /predict's separate allowance. Running the full pipeline once
+    (upload -> train -> predict -> calculate -> optimize_cost) no longer
+    exhausts a single shared counter.
+    """
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
             uid = getattr(g, "uid", request.remote_addr)
+            key = (uid, fn.__name__)
             now = time.time()
             with _rate_lock:
-                calls = [t for t in _rate_store[uid] if now - t < window]
+                calls = [t for t in _rate_store[key] if now - t < window]
                 if len(calls) >= max_calls:
                     return jsonify({"error": "Rate limit exceeded. Please wait before retrying."}), 429
                 calls.append(now)
-                _rate_store[uid] = calls
+                _rate_store[key] = calls
             return fn(*args, **kwargs)
         return wrapper
     return decorator
